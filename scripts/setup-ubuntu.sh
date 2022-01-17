@@ -27,30 +27,30 @@ mkdir -p "${BUILD_DIR}"
 cd "${BUILD_DIR}"
 
 # Install all velox and folly dependencies.
-sudo apt install -y \
-  g++ \
-  cmake \
-  ccache \
-  ninja-build \
-  checkinstall \
-  git \
-  libssl-dev \
-  libboost-all-dev \
-  libdouble-conversion-dev \
-  libgoogle-glog-dev \
-  libbz2-dev \
-  libgflags-dev \
-  libgtest-dev \
-  libgmock-dev \
-  libevent-dev \
-  libfmt-dev \
-  libprotobuf-dev \
-  liblz4-dev \
-  libzstd-dev \
-  libre2-dev \
-  libsnappy-dev \
-  liblzo2-dev \
-  protobuf-compiler
+#sudo apt install -y \
+#  g++ \
+#  cmake \
+#  ccache \
+#  ninja-build \
+#  checkinstall \
+#  git \
+#  libssl-dev \
+#  libboost-all-dev \
+#  libdouble-conversion-dev \
+#  libgoogle-glog-dev \
+#  libbz2-dev \
+#  libgflags-dev \
+#  libgtest-dev \
+#  libgmock-dev \
+#  libevent-dev \
+#  libfmt-dev \
+#  libprotobuf-dev \
+#  liblz4-dev \
+#  libzstd-dev \
+#  libre2-dev \
+#  libsnappy-dev \
+#  liblzo2-dev \
+#  protobuf-compiler
 
 function install_folly {
   local NAME="folly"
@@ -58,13 +58,14 @@ function install_folly {
   if [ -d "${NAME}" ]; then
     read -p "Do you want to rebuild '${NAME}'? (y/N) " confirm
     if [[ "${confirm}" =~ ^[Yy]$ ]]; then
-      rm -rf "${NAME}"
+      #rm -rf "${NAME}"
+      echo "rebuild"
     else
       return 0
     fi
   fi
 
-  git clone https://github.com/facebook/folly.git "${NAME}"
+  #git clone https://github.com/facebook/folly.git "${NAME}"
   cd "${NAME}"
   cmake \
     -DCMAKE_CXX_FLAGS="$COMPILER_FLAGS" \
@@ -74,7 +75,8 @@ function install_folly {
     -DFOLLY_HAVE_INT128_T=1 \
     .
   ninja
-  sudo checkinstall -y ninja install
+  #sudo checkinstall -y ninja install
+  sudo ninja install
 }
 
 install_folly
